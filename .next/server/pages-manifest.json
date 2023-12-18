@@ -1,0 +1,18 @@
+{
+  "/_error": "pages/_error.js",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/": "pages/index.js",
+  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
+  "/signin": "pages/signin.js",
+  "/dashboard": "pages/dashboard.js",
+  "/api/liveblocks/documents": "pages/api/liveblocks/documents.js",
+  "/api/liveblocks/documents/create": "pages/api/liveblocks/documents/create.js",
+  "/text/[id]": "pages/text/[id].js",
+  "/api/liveblocks/documents/liveUsers": "pages/api/liveblocks/documents/liveUsers.js",
+  "/api/database/groups": "pages/api/database/groups.js",
+  "/api/liveblocks/liveblocks-auth": "pages/api/liveblocks/liveblocks-auth.js",
+  "/api/liveblocks/documents/[documentId]/users": "pages/api/liveblocks/documents/[documentId]/users.js",
+  "/api/liveblocks/documents/[documentId]/groups": "pages/api/liveblocks/documents/[documentId]/groups.js",
+  "/api/liveblocks/documents/[documentId]": "pages/api/liveblocks/documents/[documentId].js"
+}
