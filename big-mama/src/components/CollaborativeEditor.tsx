@@ -25,7 +25,7 @@ export function CollaborativeEditor() {
     const yProvider = new LiveblocksProvider(room, yDoc);
     setDoc(yDoc);
     setProvider(yProvider);
-
+ 
     return () => {
       yDoc?.destroy();
       yProvider?.destroy();

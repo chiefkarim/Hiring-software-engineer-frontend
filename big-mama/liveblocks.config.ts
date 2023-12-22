@@ -4,7 +4,22 @@ import { createRoomContext } from "@liveblocks/react";
 const client = createClient({
   //  publicApiKey: "pk_dev_ms6_bR-vG4Sb78TKwX9uNoO-jPqPMpjkU296DI74SfPODTj9Fi70yTRu_GXEjoMu",
   // authEndpoint: "/api/auth",
-  authEndpoint: "/api/liveblocks-auth",
+  authEndpoint: async (room) => {
+    const response = await fetch("/api/liveblocks-auth", {
+      method: "POST",
+      headers: {
+        
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ room }), // Don't forget to pass `room` down
+    });
+    console.log("lol")
+    if(response.status === 403){
+      console.log("heheheh",response.body)
+      return { "error": "forbidden", "reason": "..." }
+    }
+    return await response.json();
+  },
   throttle: 16,
 });
 

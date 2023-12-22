@@ -2,7 +2,7 @@ import { useOthers } from "../../liveblocks.config";
 
 export function Cursor() {
   const others = useOthers();
-  //
+
   return (
     <>
       {others
