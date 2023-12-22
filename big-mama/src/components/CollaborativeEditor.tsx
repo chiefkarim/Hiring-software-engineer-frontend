@@ -6,11 +6,12 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import LiveblocksProvider from "@liveblocks/yjs";
-import { useRoom, useSelf } from "../../liveblocks.config";
-import { useEffect, useState } from "react";
+import { useRoom, useSelf, useMyPresence } from "../../liveblocks.config";
+import { useEffect, useState, PointerEvent } from "react";
 import { Toolbar } from "./Toolbar";
 import styles from "../styles/CollaborativeEditor.module.css";
 import { Avatars } from "./Avatars";
+import { Cursor } from "./Cursor";
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
@@ -46,7 +47,7 @@ type EditorProps = {
 function TiptapEditor({ doc, provider }: EditorProps) {
   // Get user info from Liveblocks authentication endpoint
   const userInfo = useSelf((me) => me.info);
-
+  const [myPresence, updateMyPresence] = useMyPresence();
   // Set up editor with plugins, and place user info into Yjs awareness and cursors
   const editor = useEditor({
     editorProps: {
@@ -72,13 +73,28 @@ function TiptapEditor({ doc, provider }: EditorProps) {
     ],
   });
 
+  function handelCursorMove(e: PointerEvent<HTMLDivElement>) {
+    const cursor = { x: Math.floor(e.clientX), y: Math.floor(e.clientY) };
+    updateMyPresence({ cursor });
+  }
+  function handelCursorLeave() {
+    updateMyPresence({ cursor: null });
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.editorHeader}>
-        <Toolbar editor={editor} />
-        <Avatars />
+    <main
+      onPointerMove={handelCursorMove}
+      onPointerLeave={handelCursorLeave}
+      className="flex min-h-screen flex-col items-center justify-between p-24"
+    >
+      <div className={styles.container}>
+        <div className={styles.editorHeader}>
+          <Toolbar editor={editor} />
+          <Avatars />
+        </div>
+        <EditorContent editor={editor} className={styles.editorContainer} />
       </div>
-      <EditorContent editor={editor} className={styles.editorContainer} />
-    </div>
+      <Cursor />
+    </main>
   );
 }
