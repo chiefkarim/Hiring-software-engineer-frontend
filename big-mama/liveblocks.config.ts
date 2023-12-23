@@ -13,9 +13,9 @@ const client = createClient({
       },
       body: JSON.stringify({ room }), // Don't forget to pass `room` down
     });
-    console.log("lol")
+    
     if(response.status === 403){
-      console.log("heheheh",response.body)
+      
       return { "error": "forbidden", "reason": "..." }
     }
     return await response.json();
