@@ -4,6 +4,7 @@ Embark on the development journey to create a cutting-edge Real-Time Document Co
 
 Develop a robust platform allowing users to collaboratively edit documents in real-time. Utilize Liveblocks for live updates, Next.js for the frontend, and Supabase for user authentication and document storage.
 
+[live preview](https://hiring-software-engineer-frontend.vercel.app/)
 
 ## How does this work ?
 
@@ -42,6 +43,40 @@ Clone the repository:
 ```bash
 git clone git@github.com:BIGmama-technology/Hiring-software-engineer-frontend.git
 ```
+switch to the development-karim branch
+
+switch directory to big-mama folder.
+add env and env.local
+
+inside env put:
+LIVEBLOCKS_SECRET_KEY=your key
+NEXTAUTH_SECRET=your secret
+
+inside env.local put:
+NEXT_PUBLIC_SUPABASE_URL=your Supabase url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
+
+install the dependencies:
+
+```bash
+npm install 
+# or
+yarn install 
+```
+
+run the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ## Contribution Guidelines
 
