@@ -15,6 +15,7 @@
     "@liveblocks/node": "^1.9.1",
     "@liveblocks/react": "^1.9.1",
     "@liveblocks/yjs": "^1.9.1",
+    "@supabase/ssr": "^0.0.10",
     "@tiptap/extension-collaboration": "^2.1.13",
     "@tiptap/extension-collaboration-cursor": "^2.1.13",
     "@tiptap/pm": "^2.1.13",

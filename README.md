@@ -78,6 +78,27 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+# Authentication
+1. set up environment variables
+- make a .env file and store in it:
+NEXT_PUBLIC_SUPABASE_URL= your supabase url that you get after creating a project
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your supabase key that you get after creating a project
+
+2. checking session
+- use the function readUserSession from the file lib>actions>index.ts 
+- it also contains user information like email ...
+- if the function returns a session the user is authenticated 
+- use this function on every protected route otherwise it will be accessible to anyone 
+
+3. if no session you can redirect to the login or signUp page:
+- you can use any of the functions (singIn,signUp) to authenticate the user 
+- it will send request to Supabase and return data or errors and store the user session automatically 
+- after authentication you will be redirected to the dashboard
+
+# Authentication recourses
+- the SSR is the new package recommend by Supabase for authentication see [Migrating to the SSR package from Auth Helpers](https://supabase.com/docs/guides/auth/server-side/migrating-to-ssr-from-auth-helpers) if you are using Auth Helpers
+- for a fully detailed video on [how to authenticate with SSR package and Next.js 14](https://www.youtube.com/watch?v=PdmKlne1gRY&t=623s) 
+
 ## Contribution Guidelines
 
 #### Document Your Code:
