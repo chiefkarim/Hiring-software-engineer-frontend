@@ -3,11 +3,8 @@ import { createRoomContext } from "@liveblocks/react";
 
 
 const client = createClient({
-  //  publicApiKey: "pk_dev_ms6_bR-vG4Sb78TKwX9uNoO-jPqPMpjkU296DI74SfPODTj9Fi70yTRu_GXEjoMu",
-  // authEndpoint: "/api/auth",
-  authEndpoint: "/api/liveblocks-auth"
-
-  
+  authEndpoint: "/api/liveblocks-auth",
+  throttle:16
 });
 // Presence represents the properties that exist on every user in the Room
 // and that will automatically be kept in sync. Accessible through the
@@ -100,6 +97,7 @@ export const {
   }
 } = createRoomContext<Presence, Storage, UserMeta, RoomEvent, ThreadMetadata>(client, {
   async resolveUsers({ userIds }) {
+    console.log("user ids",userIds)
     // Used only for Comments. Return a list of user information retrieved
     // from `userIds`. This info is used in comments, mentions etc.
 

@@ -1,14 +1,17 @@
 "use client";
-
 import { ReactNode, useMemo } from "react";
 import { RoomProvider } from "../../liveblocks.config";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ClientSideSuspense } from "@liveblocks/react";
 import Loading from "../app/loading";
 
-export function Room({ children }: { children: ReactNode }) {
-  const id = useSearchParams().get("roomid");
-
+export async function Room({
+  children,
+  id,
+}: {
+  children: ReactNode;
+  id: string;
+}) {
   if (id) {
     return (
       <RoomProvider
