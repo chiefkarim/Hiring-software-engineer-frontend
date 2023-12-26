@@ -10,8 +10,11 @@ import CreateRoom from "@/components/CreateRoom";
 export default async function Home() {
   let loggedIn = false
   //checking if user is logged in
+  
   const result = await readUserSession();
+  
   if (result?.data.session) {
+    
     loggedIn = true
   }
   return (

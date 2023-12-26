@@ -1,12 +1,16 @@
 "use client";
+import { createDocument } from "@/app/document/action";
 import { useRouter } from "next/navigation";
 import { v4 as uuid } from "uuid";
 
 export default function CreateRoom() {
   const roomId = uuid();
   const { push } = useRouter();
-  function createRoom() {
-    push("/document/?roomid=" + roomId);
+  async function createRoom() {
+    const result = await createDocument(roomId);
+    if (result?.type) {
+      push("/document/?roomid=" + roomId);
+    }
   }
   return (
     <button

@@ -17,19 +17,16 @@ export async function POST(request: NextRequest) {
   if (result?.data.session) {
     const user = result.data.session.user
     const userId = user.id
-    console.log(`id:${userId}`)
-    const session = liveblocks.prepareSession(`user-${userId}`, {
+    console.log(`id:${userId},user:${user}`)
+    const { body, status } = await liveblocks.identifyUser({ userId: userId, groupIds: [] }, {
       userInfo: {
         name: "Charlie Layne",
         color: "#D583F0",
         picture: "https://liveblocks.io/avatars/avatar-1.png",
       }
     })
-    const { room } = await request.json();
-    session.allow(room, session.FULL_ACCESS)
-    const { body, status } = await session.authorize();
-    console.log(`body:${body}, status:${status}`)
-    return new Response(body, { status });
+    return new Response(body, { status })
+
   } else {
 
 
@@ -38,19 +35,12 @@ export async function POST(request: NextRequest) {
 
     // Create a session for the current user
     // userInfo is made available in Liveblocks presence hooks, e.g. useOthers
-    const session = liveblocks.prepareSession(`user-${userId}`, {
-      userInfo: USER_INFO[userId],
-    });
+    const result = await liveblocks.identifyUser(`user-${userId}`, {
+      userInfo: USER_INFO[userId]
+    })
+    return new Response(result.body, { status: result.status })
 
-    // Give the user access to the room
-    const { room } = await request.json();
-
-    session.allow(room, session.FULL_ACCESS);
-
-    // Authorize the user and return the result
-    const { body, status } = await session.authorize();
-    console.log(`body:${body}, status:${status}`)
-    return new Response(body, { status });
+    
   }
 }
 
@@ -59,19 +49,19 @@ const USER_INFO = [
   {
     name: "Mislav Abha",
     color: "#F08385",
-    id:0,
+    id: 0,
     picture: "https://liveblocks.io/avatars/avatar-2.png",
   },
   {
     name: "Tatum Paolo",
     color: "#F0D885",
-    id:1,
+    id: 1,
     picture: "https://liveblocks.io/avatars/avatar-3.png",
   },
   {
     name: "Anjali Wanda",
     color: "#85EED6",
-    id:2,
+    id: 2,
     picture: "https://liveblocks.io/avatars/avatar-4.png",
   },
   {

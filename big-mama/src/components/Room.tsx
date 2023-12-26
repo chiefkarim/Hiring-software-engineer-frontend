@@ -1,9 +1,11 @@
 "use client";
-import { ReactNode, useMemo } from "react";
-import { RoomProvider } from "../../liveblocks.config";
+import { ReactNode, useEffect, useMemo } from "react";
+import { RoomProvider, useErrorListener } from "../../liveblocks.config";
 import { usePathname, useSearchParams } from "next/navigation";
 import { ClientSideSuspense } from "@liveblocks/react";
 import Loading from "../app/loading";
+import LiveblocksError from "./LiveblocksError";
+
 
 export async function Room({
   children,
@@ -12,6 +14,10 @@ export async function Room({
   children: ReactNode;
   id: string;
 }) {
+  
+    
+
+  
   if (id) {
     return (
       <RoomProvider
@@ -20,8 +26,9 @@ export async function Room({
           cursor: null,
         }}
       >
-        <ClientSideSuspense fallback={<Loading />}>
+        <ClientSideSuspense fallback={<LiveblocksError />}>
           {() => children}
+        
         </ClientSideSuspense>
       </RoomProvider>
     );

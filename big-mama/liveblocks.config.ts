@@ -97,7 +97,7 @@ export const {
   }
 } = createRoomContext<Presence, Storage, UserMeta, RoomEvent, ThreadMetadata>(client, {
   async resolveUsers({ userIds }) {
-    console.log("user ids",userIds)
+  //  console.log("user ids",userIds)
     // Used only for Comments. Return a list of user information retrieved
     // from `userIds`. This info is used in comments, mentions etc.
 

@@ -18,7 +18,8 @@ export function CollaborativeEditor() {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<any>();
-
+  
+  
   // Set up Liveblocks Yjs provider
   useEffect(() => {
     const yDoc = new Y.Doc();
@@ -36,7 +37,7 @@ export function CollaborativeEditor() {
     return null;
   }
 
-  return <TiptapEditor doc={doc} provider={provider} />;
+  return <><TiptapEditor doc={doc} provider={provider} /></>;
 }
 
 type EditorProps = {
@@ -95,6 +96,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
         <EditorContent editor={editor} className={styles.editorContainer} />
       </div>
       <Cursor />
+      
     </main>
   );
 }
