@@ -12,7 +12,7 @@ export async function signIn(data: { email: string; password: string }) {
     const supabase = await createSupabaseServerCient()
     const result = await supabase?.auth.signInWithPassword({ email: data.email, password: data.password })
     return JSON.stringify(result)
-}
+} 
 //connects to supabase and sign user out
 export async function signOut() {
     const supabase = await createSupabaseServerCient()

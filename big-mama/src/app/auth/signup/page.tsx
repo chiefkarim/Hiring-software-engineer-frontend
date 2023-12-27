@@ -7,22 +7,18 @@ import { useRouter } from "next/navigation";
 interface input {
   email: string;
   password: string;
-  name: string;
 }
 
 interface error {
   message: string;
   type: string;
-  
 }
 
 export default function Signup() {
   const [inputs, setInputs] = useState<input>({
     email: "",
     password: "",
-    name:""
   });
-
   const [error, setError] = useState<error[] | []>([]);
   const { push } = useRouter();
   const [isPending, startTransiton] = useTransition();
@@ -66,41 +62,29 @@ export default function Signup() {
       error.filter((error) => error.type == "password").length === 0 &&
       error.filter((error) => error.type == "username").length === 0
     ) {
-      startTransiton(()=>signup())
+      startTransiton(() => signup());
     }
   };
-//sign user up
-async function signup(){
-  const result = await signUp(inputs);
-      const { error } = JSON.parse(result);
-      if (error?.message) {
-        setError((errors) => [
-          ...errors.filter((error) => error.type != "server"),
-          { type: "server", message: error.message },
-        ]);
-        
-      } else {
-        setError((errors) => [
-          ...errors.filter((error) => error.type != "server"),
-        ]);
-        push("/");
-      }
-}
+  //sign user up
+  async function signup() {
+    const result = await signUp(inputs);
+    const { error } = JSON.parse(result);
+    if (error?.message) {
+      setError((errors) => [
+        ...errors.filter((error) => error.type != "server"),
+        { type: "server", message: error.message },
+      ]);
+      console.log("errors", error);
+    } else {
+      setError((errors) => [
+        ...errors.filter((error) => error.type != "server"),
+      ]);
+      push("/");
+    }
+  }
   return (
     <main className="flex min-h-screen flex-col  items-center justify-center text-xl   p-12 lg:p-24 ">
       <form onSubmit={handleSubmit} className="flex flex-col flex-wrap gap-12">
-        <div>
-          <label>
-            name:
-            <input
-              className=" mx-5"
-              type="text"
-              name="name"
-              value={inputs!.email || ""}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
         <div>
           <label>
             email:

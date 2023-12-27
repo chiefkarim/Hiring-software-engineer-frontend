@@ -28,11 +28,8 @@ export async function POST(request: NextRequest) {
     return new Response(body, { status })
 
   } else {
-
-
     // Get the current user's unique id from your database
     const userId = Math.floor(Math.random() * 10) % USER_INFO.length;
-
     // Create a session for the current user
     // userInfo is made available in Liveblocks presence hooks, e.g. useOthers
     const result = await liveblocks.identifyUser(`user-${userId}`, {

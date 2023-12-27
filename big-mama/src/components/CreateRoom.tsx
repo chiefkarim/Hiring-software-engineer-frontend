@@ -7,9 +7,15 @@ export default function CreateRoom() {
   const roomId = uuid();
   const { push } = useRouter();
   async function createRoom() {
-    const result = await createDocument(roomId);
-    if (result?.type) {
-      push("/document/?roomid=" + roomId);
+    try {
+      const result = await createDocument(roomId);
+      if (result?.type) {
+        push("/document/?roomid=" + roomId);
+      } else if (result?.status === 403) {
+        console.log("please log in");
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
   return (

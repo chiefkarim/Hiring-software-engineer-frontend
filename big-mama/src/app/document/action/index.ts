@@ -20,9 +20,11 @@ export async function createDocument(id: string) {
       })
       const data = await result.json()
       return data
+    }else{
+      return {status:403}
     }
   } catch (error) {
-    return error
+    return {error}
   }
 }
 // takes room id and checks with live blocks if the room exists
