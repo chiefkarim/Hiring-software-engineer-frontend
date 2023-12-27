@@ -1,27 +1,25 @@
-
 import { Room } from "@/components/Room";
 import { CollaborativeEditor } from "@/components/CollaborativeEditor";
 import { v4 as uuid } from "uuid";
 import { redirect } from "next/navigation";
 import NavBar from "@/components/NavBar";
 import readUserSession from "@/lib/actions";
-import CreateRoom from "@/components/CreateRoom";
+import CreateRoom from "@/components/CreateDocument";
 
 export default async function Home() {
-  let loggedIn = false
+  let loggedIn = false;
   //checking if user is logged in
-  
+
   const result = await readUserSession();
-  
+
   if (result?.data.session) {
-    
-    loggedIn = true
+    loggedIn = true;
   }
   return (
     <>
-      <NavBar loggedIn={loggedIn}/>
+      <NavBar loggedIn={loggedIn} />
       <main className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
-        <CreateRoom/>
+        <CreateRoom />
       </main>
     </>
   );

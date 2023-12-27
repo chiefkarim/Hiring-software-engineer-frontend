@@ -28,7 +28,14 @@ export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
           >
             Docs
           </a>
+          <a          
+            href="/dashboard"
+            className="block mt-4 lg:inline-block lg:mt-0 text-purple-200 hover:text-white mr-4"
+          >
+            Dashboard
+          </a>
         </div>
+        
         {loggedIn === true ? (
           <Logout />
         ) : (

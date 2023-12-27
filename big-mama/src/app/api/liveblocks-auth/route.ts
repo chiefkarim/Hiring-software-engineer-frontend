@@ -17,7 +17,6 @@ export async function POST(request: NextRequest) {
   if (result?.data.session) {
     const user = result.data.session.user
     const userId = user.id
-    console.log(`id:${userId},user:${user}`)
     const { body, status } = await liveblocks.identifyUser({ userId: userId, groupIds: [] }, {
       userInfo: {
         name: "Charlie Layne",
@@ -37,7 +36,7 @@ export async function POST(request: NextRequest) {
     })
     return new Response(result.body, { status: result.status })
 
-    
+
   }
 }
 

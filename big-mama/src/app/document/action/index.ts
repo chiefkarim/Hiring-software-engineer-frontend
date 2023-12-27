@@ -2,18 +2,18 @@
 
 import readUserSession from "@/lib/actions";
 //creates private document in liveblocks and 
-export async function createDocument(id: string) {
+export async function createDocument(id: string,metadata?:object) {
   const key = process.env.LIVEBLOCKS_SECRET_KEY;
   try {
     const session = await readUserSession()
     if (session?.data.session) {
       const user = session.data.session.user
       const userId = user.id
-      
       const result = await fetch(`https://api.liveblocks.io/v2/rooms/`, {
         method: "POST",
         headers: { Authorization: `Bearer ${key}` }, body: JSON.stringify({
           id: id,
+          metadata,
           defaultAccesses: [],
           usersAccesses: { [userId]: ["room:write"] }
         })

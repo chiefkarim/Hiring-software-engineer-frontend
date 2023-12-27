@@ -86,9 +86,9 @@ function TiptapEditor({ doc, provider }: EditorProps) {
     <main
       onPointerMove={handelCursorMove}
       onPointerLeave={handelCursorLeave}
-      className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600"
+      className="flex h-screen text-white flex-col  text-xl p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600"
     >
-      <div className={styles.container}>
+      <div className={`flex-1 ${styles.container} mb-6 `}>
         <div className={styles.editorHeader}>
           <Toolbar editor={editor} />
           <Avatars />

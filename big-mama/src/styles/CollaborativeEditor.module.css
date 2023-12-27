@@ -7,6 +7,7 @@
     width: 100%;
     height: 100%;
     color: #111827;
+    overflow: hidden;
   }
   
   .editorHeader {
@@ -21,6 +22,8 @@
     width: 100%;
     height: 100%;
     padding: 1rem;
+    overflow-y: scroll;
+    
   }
   
   .editor:focus {
@@ -30,6 +33,7 @@
   .editorContainer {
     position: relative;
     height: 100%;
+    
   }
   
   .placeholder {
