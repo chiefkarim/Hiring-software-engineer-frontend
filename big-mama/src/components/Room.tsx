@@ -6,7 +6,6 @@ import { ClientSideSuspense } from "@liveblocks/react";
 import Loading from "../app/loading";
 import LiveblocksError from "./LiveblocksError";
 
-
 export async function Room({
   children,
   id,
@@ -14,10 +13,6 @@ export async function Room({
   children: ReactNode;
   id: string;
 }) {
-  
-    
-
-  
   if (id) {
     return (
       <RoomProvider
@@ -28,7 +23,6 @@ export async function Room({
       >
         <ClientSideSuspense fallback={<LiveblocksError />}>
           {() => children}
-        
         </ClientSideSuspense>
       </RoomProvider>
     );

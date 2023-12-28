@@ -2,10 +2,10 @@ import { Room } from "@/components/Room";
 import { CollaborativeEditor } from "@/components/CollaborativeEditor";
 import NavBar from "@/components/NavBar";
 import { roomExists } from "./action";
-import type { ServerComponentProps } from "next/server-component";
+
 import readUserSession from "@/lib/actions";
 
-export default async function Document({ searchParams }: ServerComponentProps) {
+export default async function Document({ searchParams }: any) {
   const id = searchParams?.roomid;
   const exists = await roomExists(id || "");
   let loggedIn = false;
@@ -24,7 +24,9 @@ export default async function Document({ searchParams }: ServerComponentProps) {
         <main className="flex min-h-screen  flex-col items-center justify-center text-xl  p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
           <h1 className=" text-lg text-white">
             Room does not exist, please check your link.{" "}
-            <a href="/" className="  opacity-50">Home page</a>
+            <a href="/" className="  opacity-50">
+              Home page
+            </a>
           </h1>
         </main>
       </>
