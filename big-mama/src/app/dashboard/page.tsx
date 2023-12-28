@@ -1,4 +1,4 @@
-import CreateRoom from "@/components/CreateDocument";
+import CreateDocument from "@/components/CreateDocument";
 import DisplayDocuments from "@/components/DisplayDocuments";
 import NavBar from "@/components/NavBar";
 import readUserSession from "@/lib/actions";
@@ -24,7 +24,7 @@ export default async function Dashboard() {
       <>
         <NavBar loggedIn={loggedIn} />
         <main className="flex min-h-screen flex-col items-center justify-center text-xl gap-4 p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
-          <CreateRoom />
+          <CreateDocument />
           <DisplayDocuments rooms={rooms} />
         </main>
       </>

@@ -96,7 +96,6 @@ function TiptapEditor({ doc, provider }: EditorProps) {
         <EditorContent editor={editor} className={styles.editorContainer} />
       </div>
       <Cursor />
-      
     </main>
   );
 }

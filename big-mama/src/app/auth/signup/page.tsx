@@ -1,12 +1,20 @@
 "use client";
-import { ChangeEvent, FormEvent, useState, useTransition } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+  useState,
+  useTransition,
+} from "react";
 import { v4 as uuid } from "uuid";
 import { signUp } from "../actions";
 import { useRouter } from "next/navigation";
 
 interface input {
+  [x: string]: any;
   email: string;
   password: string;
+  name: string;
 }
 
 interface error {
@@ -18,6 +26,7 @@ export default function Signup() {
   const [inputs, setInputs] = useState<input>({
     email: "",
     password: "",
+    name: "",
   });
   const [error, setError] = useState<error[] | []>([]);
   const { push } = useRouter();
@@ -31,37 +40,17 @@ export default function Signup() {
   };
 
   //checks for errors before submitting
-  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
 
-    if (inputs.email == "") {
-      if (error.filter((error) => error.type == "email").length === 0) {
-        setError((errors) => [
-          ...errors,
-          { type: "email", message: "email is required." },
-        ]);
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    let errors: error[] = [];
+    for (const key in inputs) {
+      if (inputs[key] === "") {
+        errors.push({ message: `${key} is required`, type: key });
       }
-    } else {
-      setError((error) => {
-        return [...error].filter((error) => error.type != "email");
-      });
     }
-    if (inputs.password == "") {
-      if (error.filter((error) => error.type == "password").length === 0) {
-        setError((errors) => [
-          ...errors,
-          { type: "password", message: "Password is required." },
-        ]);
-      }
-    } else {
-      setError((error) => {
-        return [...error].filter((error) => error.type != "password");
-      });
-    }
-    if (
-      error.filter((error) => error.type == "password").length === 0 &&
-      error.filter((error) => error.type == "username").length === 0
-    ) {
+    setError(() => errors);
+    if (errors.length === 0) {
       startTransiton(() => signup());
     }
   };
@@ -74,7 +63,7 @@ export default function Signup() {
         ...errors.filter((error) => error.type != "server"),
         { type: "server", message: error.message },
       ]);
-      console.log("errors", error);
+      
     } else {
       setError((errors) => [
         ...errors.filter((error) => error.type != "server"),
@@ -82,9 +71,22 @@ export default function Signup() {
       push("/");
     }
   }
+  console.log(inputs)
   return (
     <main className="flex min-h-screen flex-col  items-center justify-center text-xl   p-12 lg:p-24 ">
       <form onSubmit={handleSubmit} className="flex flex-col flex-wrap gap-12">
+        <div>
+          <label>
+            name:
+            <input
+              className=" mx-5"
+              type="text"
+              name="name"
+              value={inputs!.name || ""}
+              onChange={handleChange}
+            />
+          </label>
+        </div>
         <div>
           <label>
             email:
@@ -104,7 +106,7 @@ export default function Signup() {
               className=" mx-5"
               type="password"
               name="password"
-              value={inputs.password || ""}
+              value={inputs!.password || ""}
               onChange={handleChange}
             />
           </label>
