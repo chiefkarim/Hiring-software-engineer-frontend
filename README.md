@@ -58,9 +58,19 @@ inside env put:
 LIVEBLOCKS_SECRET_KEY=your key
 NEXTAUTH_SECRET=your secret
 
+create supabase project:
+- make table :
+![Alt text](image.png)
+with 4 polices :
+READ ![Alt text](image-1.png)
+INSERT ![Alt text](image-2.png)
+DELETE ![Alt text](image-3.png)
+UPDATE ![Alt text](image-4.png)
+
 inside env.local put:
 NEXT_PUBLIC_SUPABASE_URL=your Supabase url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
+
 
 install the dependencies:
 
