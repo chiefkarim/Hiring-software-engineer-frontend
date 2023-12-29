@@ -10,7 +10,7 @@ export function Cursor() {
         .map(({ connectionId, presence, info }) => (
           <div
             key={connectionId}
-            style={{
+            style={{color:"black",
               position: "absolute",
               left: 0,
               top: 0,

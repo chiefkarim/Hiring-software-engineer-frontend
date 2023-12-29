@@ -49,8 +49,10 @@ function TiptapEditor({ doc, provider }: EditorProps) {
   // Get user info from Liveblocks authentication endpoint
   const userInfo = useSelf((me) => me.info);
   const [myPresence, updateMyPresence] = useMyPresence();
+  const canWrite = useSelf((me) => me.canWrite);
   // Set up editor with plugins, and place user info into Yjs awareness and cursors
   const editor = useEditor({
+    editable: canWrite,
     editorProps: {
       attributes: {
         // Add styles to editor element

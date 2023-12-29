@@ -12,9 +12,9 @@ const config: Config = {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-      },colors:{
-        purple:"#9561E2",
-        "purple-200":"#DAC8F5",
+      }, colors: {
+        purple: "#9561E2",
+        "purple-200": "#DAC8F5",
 
       }
     },

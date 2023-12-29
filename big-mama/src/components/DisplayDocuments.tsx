@@ -1,11 +1,11 @@
 "use client";
 import { deleteDocument } from "@/app/document/action";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { v4 as uuid } from "uuid";
 
 export default function DisplayDocuments({ rooms }: any) {
   const [isPending, startTransiton] = useTransition();
-
+  const [removing, setRemoving] = useState("");
   //formatting the date before displaying
   const formatedRooms = rooms.map((room: any) => {
     return {
@@ -16,9 +16,12 @@ export default function DisplayDocuments({ rooms }: any) {
       }),
     };
   });
-
+  console.log(rooms);
   //handel room delete
   async function handleDelete(id: string) {
+    setRemoving(() => {
+      return id;
+    });
     startTransiton(async () => {
       const result: any = await deleteDocument(id);
       if (result) {
@@ -32,8 +35,8 @@ export default function DisplayDocuments({ rooms }: any) {
       <div key={uuid()} className="bg-gray-100 bg-opacity-30 p-4">
         <a href={`/document/?roomid=${room.id}`}>
           <h1>{room?.metadata?.title}</h1>
-          <div className="flex justify-end">
-            <span>{room.createdAt}</span>
+          <div className="flex  text-sm opacity-80">
+            <span>{room.metadata.type}</span>
           </div>
         </a>
         <div>
@@ -43,11 +46,18 @@ export default function DisplayDocuments({ rooms }: any) {
           >
             delete
           </button>
-          <div className={isPending ? "inline-block" : `hidden`}>
-        <div className="px-3 mx-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
-          Deleting...
-        </div>
-      </div>
+          <div className="flex justify-end text-sm">
+            <span>{room.createdAt}</span>
+          </div>
+          <div
+            className={
+              isPending && room.id == removing ? "inline-block" : `hidden`
+            }
+          >
+            <div className="px-3 mx-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+              Deleting...
+            </div>
+          </div>
         </div>
       </div>
     );

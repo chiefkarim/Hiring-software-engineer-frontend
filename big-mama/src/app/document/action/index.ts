@@ -10,10 +10,11 @@ const liveblocks = new Liveblocks({
 });
 export async function createDocument({ id, title, type }: { id: string, title: string, type: string }) {
   const key = process.env.LIVEBLOCKS_SECRET_KEY;
-  const metadata = { title: title }
-  let defaultAccess: any = []
+  const metadata = { title: title ,type : "private"}
+  let defaultAccess: any = ["room:read", "room:presence:write"]
   if (type === "public") {
-    defaultAccess = ["room:read", "room:presence:write"]
+    defaultAccess = ["room:write"]
+    metadata.type = "public"
   }
 
   try {

@@ -2,7 +2,7 @@ import { Room } from "@/components/Room";
 import { CollaborativeEditor } from "@/components/CollaborativeEditor";
 import NavBar from "@/components/NavBar";
 import { roomExists } from "./action";
-
+import { redirect } from "next/navigation";
 import readUserSession from "@/lib/actions";
 
 export default async function Document({ searchParams }: any) {
@@ -14,6 +14,8 @@ export default async function Document({ searchParams }: any) {
   const result = await readUserSession();
   if (result?.data.session) {
     loggedIn = true;
+  }else{
+    redirect("/")
   }
 
   //check if room exists before join

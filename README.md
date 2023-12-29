@@ -8,7 +8,7 @@ Develop a robust platform allowing users to collaboratively edit documents in re
 
 ## How does this work ?
 
-Below is a list of tasks that candidates concurently work on. If you deem your contribution to be complete, you can create a pull request. 
+Below is a list of tasks that candidates concurently work on. If you deem your contribution to be complete, you can create a pull request.
 The team will review your contribution and provide feedback. If its good your branch will be merged with the `main` branch.
 Tasks that are done will be ommited and new tasks will apear for others.
 Candidates with merged changes will be invited to pass an interview with the team.
@@ -20,29 +20,35 @@ Both students looking for an internship at BIGmama and professionals looking for
 ## Tasks
 
 #### 1. Shared Document Editing
-   - Implement Liveblocks to enable real-time collaboration for synchronized document editing.
-   - Develop collaborative cursor tracking for an enhanced collaborative experience.
+
+- Implement Liveblocks to enable real-time collaboration for synchronized document editing.
+- Develop collaborative cursor tracking for an enhanced collaborative experience.
 
 #### 2. User Presence Indicators
-   - Incorporate real-time indicators to display the presence of other users currently editing the document.
+
+- Incorporate real-time indicators to display the presence of other users currently editing the document.
 
 #### 3. User Authentication and Ownership
-   - Integrate Supabase for user authentication.
-   - Implement document ownership through Supabase for secure access and management.
+
+- Integrate Supabase for user authentication.
+- Implement document ownership through Supabase for secure access and management.
 
 #### 4. Mobile-Friendly Interface
-   - Ensure a responsive and intuitive UI for seamless document editing on various devices.
+
+- Ensure a responsive and intuitive UI for seamless document editing on various devices.
 
 #### 5. UI/UX Best Practices
-   - Implement best practices in UI/UX design for an intuitive and visually pleasing editing experience.
 
+- Implement best practices in UI/UX design for an intuitive and visually pleasing editing experience.
 
 ## Setup
 
 Clone the repository:
+
 ```bash
 git clone git@github.com:BIGmama-technology/Hiring-software-engineer-frontend.git
 ```
+
 switch to the development-karim branch
 
 switch directory to big-mama folder.
@@ -59,9 +65,9 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your anon key
 install the dependencies:
 
 ```bash
-npm install 
+npm install
 # or
-yarn install 
+yarn install
 ```
 
 run the development server:
@@ -79,42 +85,52 @@ bun dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 # Authentication
+
 1. set up environment variables
+
 - make a .env file and store in it:
-NEXT_PUBLIC_SUPABASE_URL= your supabase url that you get after creating a project
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your supabase key that you get after creating a project
+  NEXT_PUBLIC_SUPABASE_URL= your supabase url that you get after creating a project
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=your supabase key that you get after creating a project
 
 2. checking session
-- use the function readUserSession from the file lib>actions>index.ts 
+
+- use the function readUserSession from the file lib>actions>index.ts
 - it also contains user information like email ...
-- if the function returns a session the user is authenticated 
-- use this function on every protected route otherwise it will be accessible to anyone 
+- if the function returns a session the user is authenticated
+- use this function on every protected route otherwise it will be accessible to anyone
 
 3. if no session you can redirect to the login or signUp page:
-- you can use any of the functions (singIn,signUp) to authenticate the user 
-- it will send request to Supabase and return data or errors and store the user session automatically 
+
+- you can use any of the functions (singIn,signUp) to authenticate the user
+- it will send request to Supabase and return data or errors and store the user session automatically
 - after authentication you will be redirected to the dashboard
 
 # Authentication recourses
+
 - the SSR is the new package recommend by Supabase for authentication see [Migrating to the SSR package from Auth Helpers](https://supabase.com/docs/guides/auth/server-side/migrating-to-ssr-from-auth-helpers) if you are using Auth Helpers
-- for a fully detailed video on [how to authenticate with SSR package and Next.js 14](https://www.youtube.com/watch?v=PdmKlne1gRY&t=623s) 
+- for a fully detailed video on [how to authenticate with SSR package and Next.js 14](https://www.youtube.com/watch?v=PdmKlne1gRY&t=623s)
 
 ## Contribution Guidelines
 
 #### Document Your Code:
-   - Ensure comprehensive documentation of your code within the README.md file. Clearly explain the purpose and functionality of each component or module.
+
+- Ensure comprehensive documentation of your code within the README.md file. Clearly explain the purpose and functionality of each component or module.
 
 #### Code Organization:
-   - Adhere to best practices for frontend development, maintaining clean, modular, and well-organized code. Use appropriate folder structures to enhance code readability.
+
+- Adhere to best practices for frontend development, maintaining clean, modular, and well-organized code. Use appropriate folder structures to enhance code readability.
 
 #### Testing:
-   - Implement thorough testing for collaborative features and user management to ensure the stability and reliability of the platform. Consider unit tests, integration tests, and end-to-end tests.
+
+- Implement thorough testing for collaborative features and user management to ensure the stability and reliability of the platform. Consider unit tests, integration tests, and end-to-end tests.
 
 #### Commit Regularly:
-   - Commit your changes regularly with clear and descriptive commit messages. This helps in tracking the development progress and understanding the purpose of each commit.
+
+- Commit your changes regularly with clear and descriptive commit messages. This helps in tracking the development progress and understanding the purpose of each commit.
 
 #### Collaboration:
-   - Collaborate effectively with other team members. Participate in code reviews, provide constructive feedback, and work collectively to enhance the project's overall quality.
+
+- Collaborate effectively with other team members. Participate in code reviews, provide constructive feedback, and work collectively to enhance the project's overall quality.
 
 ## Resources
 
@@ -127,21 +143,27 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your supabase key that you get after creating a pr
 ## FAQ
 
 #### How should I approach collaborative cursor tracking?
+
 Focus on creating a seamless collaborative experience by ensuring synchronized real-time editing with Liveblocks.
 
 #### What if I encounter issues with Liveblocks or Supabase integration?
+
 Open an issue, and the team will provide assistance promptly.
 
 #### Can I propose additional features for document collaboration?
+
 Absolutely! Feel free to enhance the project by proposing features that contribute to an enriched collaborative document editing experience.
 
 #### how many features should I work on ?
+
 doesn't matter, what important is the value of your contribution and it's quality, impress us !
 
 #### what if the task I am working on gets completed by someone else ?
+
 pick another task, and hurry up !
 
 #### what if I have a question ?
+
 Open an issue and we will answer it as soon as possible !
 
 btawfiq inchalah
