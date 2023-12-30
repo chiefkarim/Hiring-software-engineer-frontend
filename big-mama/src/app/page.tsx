@@ -1,10 +1,6 @@
-import { Room } from "@/components/Room";
-import { CollaborativeEditor } from "@/components/CollaborativeEditor";
-import { v4 as uuid } from "uuid";
 import { redirect } from "next/navigation";
 import NavBar from "@/components/NavBar";
 import readUserSession from "@/lib/actions";
-import CreateRoom from "@/components/CreateDocument";
 import DemoAccounts from "@/components/DemoAccounts";
 
 export default async function Home() {

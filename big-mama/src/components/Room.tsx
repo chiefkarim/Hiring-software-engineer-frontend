@@ -1,9 +1,7 @@
 "use client";
-import { ReactNode, useEffect, useMemo } from "react";
-import { RoomProvider, useErrorListener } from "../../liveblocks.config";
-import { usePathname, useSearchParams } from "next/navigation";
+import { ReactNode } from "react";
+import { RoomProvider } from "../../liveblocks.config";
 import { ClientSideSuspense } from "@liveblocks/react";
-import Loading from "../app/loading";
 import LiveblocksError from "./LiveblocksError";
 
 export async function Room({

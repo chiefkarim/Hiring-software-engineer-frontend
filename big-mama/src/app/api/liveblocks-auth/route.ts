@@ -17,17 +17,23 @@ export async function POST(request: NextRequest) {
   const result = await readUserSession()
   if (result?.data.session) {
     const user = result.data.session.user
-    const userId = user.id
+    const userId = user.email
     const response: any = await getUserInfos()
+    console.log("userinfo",)
     if (response.error) {
       return new Response("Error while fetching the user", { status: 500 })
     }
-    const userInfo = { name: response?.name, picture: response?.avatar }
-    const { body, status } = await liveblocks.identifyUser({ userId: userId, groupIds: [] }, {
-      userInfo: userInfo
-    })
+    if(userId){
 
-    return new Response(body, { status })
+      const userInfo = { name: response?.name, picture: response?.avatar }
+      const { body, status } = await liveblocks.identifyUser({ userId: userId, groupIds: [] }, {
+        userInfo: userInfo
+      })
+  
+      return new Response(body, { status })
+    }else{
+      return new Response("", { status:403 })
+    }
 
   }else{
     return new Response("", { status:403 })

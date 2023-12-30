@@ -6,20 +6,36 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import LiveblocksProvider from "@liveblocks/yjs";
-import { useRoom, useSelf, useMyPresence } from "../../liveblocks.config";
-import { useEffect, useState, PointerEvent } from "react";
+import { useRoom, useSelf, useMyPresence, useEventListener } from "../../liveblocks.config";
+import { useEffect, useState, PointerEvent, useRef } from "react";
 import { Toolbar } from "./Toolbar";
 import styles from "../styles/CollaborativeEditor.module.css";
 import { Avatars } from "./Avatars";
 import { Cursor } from "./Cursor";
+import PermissionBar from "@/components/PermissionBar";
+import { EditorView } from "@tiptap/pm/view";
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<any>();
+  const [rerender,setRerender] = useState(1)
   
-  
+  // reconnect on any of the users permission change
+ 
+   useEventListener(({ event, user, connectionId }) => {
+     //                       ^^^^ Will be Client A
+     if (event.type === "PermissionUpdate") {
+       // rerendering the component and reconnecting so changes take effect
+       console.log(event,user,connectionId)
+      room.reconnect()
+     setRerender(Math.random())
+     }
+   });
+
+ 
+
   // Set up Liveblocks Yjs provider
   useEffect(() => {
     const yDoc = new Y.Doc();
@@ -37,7 +53,7 @@ export function CollaborativeEditor() {
     return null;
   }
 
-  return <><TiptapEditor doc={doc} provider={provider} /></>;
+  return <><TiptapEditor  doc={doc} provider={provider} /></>;
 }
 
 type EditorProps = {
@@ -50,6 +66,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
   const userInfo = useSelf((me) => me.info);
   const [myPresence, updateMyPresence] = useMyPresence();
   const canWrite = useSelf((me) => me.canWrite);
+ 
   // Set up editor with plugins, and place user info into Yjs awareness and cursors
   const editor = useEditor({
     editable: canWrite,
@@ -74,7 +91,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
         user: userInfo,
       }),
     ],
-  });
+  },[canWrite]);
 
   function handelCursorMove(e: PointerEvent<HTMLDivElement>) {
     const cursor = { x: Math.floor(e.clientX), y: Math.floor(e.clientY) };
@@ -92,12 +109,22 @@ function TiptapEditor({ doc, provider }: EditorProps) {
     >
       <div className={`flex-1 ${styles.container} mb-6 `}>
         <div className={styles.editorHeader}>
-          <Toolbar editor={editor} />
+         {canWrite ? <Toolbar editor={editor} /> : null}
+          <div className={canWrite ? "flex" : "flex flex-col"}>
           <Avatars />
-        </div>
-        <EditorContent editor={editor} className={styles.editorContainer} />
+          {canWrite ? <PermissionBar/> : ""}
+          </div>
+        </div >
+       {canWrite ? <EditorContent editor={editor} className={styles.editorContainer} /> :  <EditorContent editor={editor} className={styles.editorContainer + " p-1"} />}
       </div>
       <Cursor />
     </main>
   );
 }
+// Prevents a matchesNode error on hot reloading
+EditorView.prototype.updateState = function updateState(state:any) {
+  // @ts-ignore
+  if (!this.docView) return;
+  // @ts-ignore
+  this.updateStateInner(state, this.state.plugins != state.plugins);
+};

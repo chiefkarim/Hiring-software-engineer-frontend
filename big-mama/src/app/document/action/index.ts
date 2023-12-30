@@ -10,7 +10,7 @@ const liveblocks = new Liveblocks({
 });
 export async function createDocument({ id, title, type }: { id: string, title: string, type: string }) {
   const key = process.env.LIVEBLOCKS_SECRET_KEY;
-  const metadata = { title: title ,type : "private"}
+  const metadata = { title: title, type: "private" }
   let defaultAccess: any = ["room:read", "room:presence:write"]
   if (type === "public") {
     defaultAccess = ["room:write"]
@@ -21,19 +21,24 @@ export async function createDocument({ id, title, type }: { id: string, title: s
     const session = await readUserSession()
     if (session?.data.session) {
       const user = session.data.session.user
-      const userId = user.id
-      const result = await fetch(`https://api.liveblocks.io/v2/rooms/`, {
-        method: "POST",
-        headers: { Authorization: `Bearer ${key}` }, body: JSON.stringify({
-          id: id,
-          metadata,
-          defaultAccesses: defaultAccess,
-          usersAccesses: { [userId]: ["room:write"] }
-        })
-      })
+      const userId = user.email
+      if (userId) {
 
-      const data = await result.json()
-      return data
+        const result = await fetch(`https://api.liveblocks.io/v2/rooms/`, {
+          method: "POST",
+          headers: { Authorization: `Bearer ${key}` }, body: JSON.stringify({
+            id: id,
+            metadata,
+            defaultAccesses: defaultAccess,
+            usersAccesses: { [userId]: ["room:write"] }
+          })
+        })
+
+        const data = await result.json()
+        return data
+      } else {
+        return { status: 403 }
+      }
     } else {
       return { status: 403 }
     }
@@ -87,4 +92,26 @@ export async function deleteDocument(id: string) {
     return console.error("error deleting document", error)
   }
 
+}
+
+export async function updateUserPermission(roomId: string, userId: string, permission: string) {
+  let updatedPermission: any
+  if (permission === "write") {
+    updatedPermission = ["room:write"]
+  } else if (permission === "read") {
+    updatedPermission = null
+  }
+
+  
+    const room = await liveblocks.updateRoom(roomId, {
+      // Optional, update the room's user ID permissions
+      usersAccesses: {
+        [userId]: updatedPermission,
+      }
+    });
+    console.log("roomm", room)
+    revalidatePath("/document")
+    
+    return room
+  
 }
