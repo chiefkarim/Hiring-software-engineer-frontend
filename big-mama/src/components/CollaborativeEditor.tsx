@@ -20,21 +20,15 @@ export function CollaborativeEditor() {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<any>();
-  const [rerender,setRerender] = useState(1)
   
   // reconnect on any of the users permission change
  
    useEventListener(({ event, user, connectionId }) => {
      //                       ^^^^ Will be Client A
      if (event.type === "PermissionUpdate") {
-       // rerendering the component and reconnecting so changes take effect
-       console.log(event,user,connectionId)
-      room.reconnect()
-     setRerender(Math.random())
+      room.reconnect()   
      }
    });
-
- 
 
   // Set up Liveblocks Yjs provider
   useEffect(() => {
@@ -110,7 +104,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
       <div className={`flex-1 ${styles.container} mb-6 `}>
         <div className={styles.editorHeader}>
          {canWrite ? <Toolbar editor={editor} /> : null}
-          <div className={canWrite ? "flex" : "flex flex-col"}>
+          <div className={canWrite ? "flex" : "flex ml-auto pt-[.7em]"}>
           <Avatars />
           {canWrite ? <PermissionBar/> : ""}
           </div>

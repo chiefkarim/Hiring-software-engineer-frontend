@@ -35,6 +35,7 @@ export async function createDocument({ id, title, type }: { id: string, title: s
         })
 
         const data = await result.json()
+        console.log("data", data)
         return data
       } else {
         return { status: 403 }
@@ -85,9 +86,10 @@ export async function deleteDocument(id: string) {
       method: "DELETE",
       headers: { Authorization: `Bearer ${key}` },
     })
-    if (result.status === 204) {
-      revalidatePath("/dashboard")
-    }
+
+    revalidatePath("/dashboard")
+    revalidatePath("/document")
+
   } catch (error) {
     return console.error("error deleting document", error)
   }
@@ -102,16 +104,17 @@ export async function updateUserPermission(roomId: string, userId: string, permi
     updatedPermission = null
   }
 
-  
-    const room = await liveblocks.updateRoom(roomId, {
-      // Optional, update the room's user ID permissions
-      usersAccesses: {
-        [userId]: updatedPermission,
-      }
-    });
-    console.log("roomm", room)
-    revalidatePath("/document")
-    
-    return room
-  
+
+  const room = await liveblocks.updateRoom(roomId, {
+    // Optional, update the room's user ID permissions
+    usersAccesses: {
+      [userId]: updatedPermission,
+    }
+  });
+  console.info(`room permission ${roomId} updated`, room)
+  revalidatePath("/document")
+  revalidatePath("/dashboard")
+
+  return room
+
 }

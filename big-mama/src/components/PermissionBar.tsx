@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, FormEventHandler, useState } from "react";
 import { useOthers } from "../../liveblocks.config";
 import Image from "next/image";
 import { updateUserPermission } from "@/app/document/action";
@@ -9,8 +9,8 @@ import { useBroadcastEvent } from "../../liveblocks.config";
 export default function PermissionBar() {
   const [permissionPanel, setPermissionPanel] = useState(false);
   const users = useOthers();
-  const broadcast = useBroadcastEvent()
-  
+  const broadcast = useBroadcastEvent();
+
   const roomId: string = useSearchParams().get("roomid") || "";
   function handelClick() {
     setPermissionPanel(!permissionPanel);
@@ -22,15 +22,21 @@ export default function PermissionBar() {
   ) {
     const permission: string = event.target.value;
     const result = await updateUserPermission(roomId, id, permission);
-    console.log("result", result);
-    if(result){
-        broadcast({type:"PermissionUpdate",message:`user ${id} permission have been updated`})
+
+    if (result) {
+      broadcast({
+        type: "PermissionUpdate",
+        message: `user ${id} permission have been updated`,
+      });
     }
   }
-  function sendInvite() {
 
+  async function sendInvite(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const id = event.currentTarget.email.value;
+    const result = await updateUserPermission(roomId, id, "write")
   }
-  
+
   return (
     <div className=" pr-[1em] ">
       <button
@@ -49,17 +55,21 @@ export default function PermissionBar() {
           <label htmlFor="invite" className=" text-sm ">
             Invite people
           </label>
-          <div>
+          <form onSubmit={sendInvite}>
             <input
               id="invite"
+              name="email"
               type="email"
               placeholder="Email address"
               className=" border-gray-600 rounded border-[1px] border-solid"
             />
-            <button className=" text-base text-white bg-[#2f2640] rounded py-1 px-2 m-1">
+            <button
+              type="submit"
+              className=" text-base text-white bg-[#2f2640] rounded py-1 px-2 m-1"
+            >
               Send invite
             </button>
-          </div>
+          </form>
           <div className=" overflow-y-scroll">
             {users.map((user) => {
               return (
@@ -82,9 +92,10 @@ export default function PermissionBar() {
                   <select
                     name="permission"
                     onChange={(event) => permissionChange(event, user.id)}
+                    defaultValue={user.canWrite ? "write" : "read"}
                   >
-                    <option value="read" selected={user.canWrite}>can view</option>
-                    <option value="write" selected={user.canWrite}>can edit</option>
+                    <option value="read">can view</option>
+                    <option value="write">can edit</option>
                   </select>
                 </div>
               );

@@ -4,13 +4,15 @@ import NavBar from "@/components/NavBar";
 import readUserSession from "@/lib/actions";
 import { Liveblocks } from "@liveblocks/node";
 import { redirect } from "next/navigation";
+import { unstable_noStore as noStore } from "next/cache";
 
 export default async function Dashboard() {
   let loggedIn = false;
   const result = await readUserSession();
-
+noStore()
   if (result?.data.session) {
-    const userId = result.data.session.user.id;
+    const userId = result.data.session.user.email;
+    console.info("Dashboard component: userId",userId)
     loggedIn = true;
     const SECRET_KEY = process.env.LIVEBLOCKS_SECRET_KEY;
     const liveblocks = new Liveblocks({
