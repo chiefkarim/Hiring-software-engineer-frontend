@@ -1,7 +1,7 @@
 "use server";
 
 import readUserSession from "@/lib/actions";
-import { createSupabaseServerCient } from "@/lib/supabase/supabase";
+import { createSupabaseServerClient } from "@/lib/supabase/supabase";
 import { revalidatePath } from "next/cache";
 import { Liveblocks } from "@liveblocks/node";
 //creates private document in liveblocks and
@@ -77,9 +77,9 @@ export async function roomExists(id: string) {
 }
 
 export async function getUserInfos() {
-  const supabase = await createSupabaseServerCient();
-  const result: any = await supabase?.from("users").select("*");
-  console.info("userinfo", result);
+  const supabase:any = await createSupabaseServerClient();
+  const result = await supabase.from("users").select("*");
+
   if (result.error) {
     throw new Error(result.error.message);
   }
@@ -97,7 +97,7 @@ export async function deleteDocument(id: string) {
     revalidatePath("/dashboard");
     revalidatePath("/document");
   } catch (error) {
-    return console.error("error deleting document", error);
+    return error
   }
 }
 
@@ -119,7 +119,7 @@ export async function updateUserPermission(
       [userId]: updatedPermission,
     },
   });
-  console.info(`room permission ${roomId} updated`, room);
+  
   revalidatePath("/document");
   revalidatePath("/dashboard");
 

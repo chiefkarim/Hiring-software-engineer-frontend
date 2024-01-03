@@ -1,16 +1,16 @@
 "use server";
 
-import { createSupabaseServerCient } from "../supabase/supabase";
+import { createSupabaseServerClient } from "../supabase/supabase";
 //reading user session to check if he's signed in
 import { signIn } from "@/app/auth/actions";
 import { unstable_noStore as noStore } from "next/cache";
 export default async function readUserSession() {
   noStore();
   try {
-    const supabase = await createSupabaseServerCient();
-    return supabase?.auth.getSession();
+    const supabase: any = await createSupabaseServerClient();
+    return supabase.auth.getSession();
   } catch (error: any) {
-    console.error(error?.message);
+    //implement error handling
   }
 }
 

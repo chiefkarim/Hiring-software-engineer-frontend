@@ -1,8 +1,9 @@
 "use server";
 import {
-  createBrowserClient,
-  createServerClient,
+  createBrowserClient, createServerClient,
   type CookieOptions,
+  
+
 } from "@supabase/ssr";
 import { error } from "console";
 import { cookies } from "next/headers";
@@ -16,7 +17,7 @@ export async function createSupabaseFrontendClient() {
     try {
       return createBrowserClient(url, key);
     } catch (error) {
-      console.error(error);
+     return error
     }
   } else if (!url) {
     throw error(
@@ -28,14 +29,15 @@ export async function createSupabaseFrontendClient() {
     );
   }
 }
+
 //create connection to supabase from the server
-export async function createSupabaseServerCient() {
+export async function createSupabaseServerClient() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (url && key) {
     try {
-      return createServerClient(url, key, {
+      const supabase  = createServerClient(url, key, {
         cookies: {
           get(name) {
             //return cookie with the name "name here"
@@ -51,8 +53,9 @@ export async function createSupabaseServerCient() {
           },
         },
       });
-    } catch (error) {
-      console.error(error);
+
+      return   supabase  } catch (error) {
+     return error
     }
   } else if (!url) {
     throw error(

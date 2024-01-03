@@ -20,7 +20,7 @@ export default function DemoAccounts() {
       const { error } = JSON.parse(result);
       if (error) {
         setError(error.message);
-        console.error("Error", error);
+       
       }
     });
   }

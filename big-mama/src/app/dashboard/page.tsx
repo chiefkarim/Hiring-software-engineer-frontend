@@ -12,7 +12,7 @@ export default async function Dashboard() {
   noStore();
   if (result?.data.session) {
     const userId = result.data.session.user.email;
-    console.info("Dashboard component: userId", userId);
+  
     loggedIn = true;
     const SECRET_KEY = process.env.LIVEBLOCKS_SECRET_KEY;
     const liveblocks = new Liveblocks({
