@@ -5,7 +5,6 @@ import { roomExists } from "./action";
 import { redirect } from "next/navigation";
 import readUserSession from "@/lib/actions";
 
-
 export default async function Document({ searchParams }: any) {
   const id = searchParams?.roomid;
   const exists = await roomExists(id || "");
@@ -15,8 +14,8 @@ export default async function Document({ searchParams }: any) {
   const result = await readUserSession();
   if (result?.data.session) {
     loggedIn = true;
-  }else{
-    redirect("/")
+  } else {
+    redirect("/");
   }
 
   //check if room exists before join

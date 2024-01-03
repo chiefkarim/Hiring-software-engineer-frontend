@@ -1,11 +1,12 @@
 "use client";
 import { DemoAccountLogIn } from "@/lib/actions";
 import { FormEvent, useState, useTransition } from "react";
+import {Button} from '@nextui-org/button'; 
 
 export default function DemoAccounts() {
   const [isPending, startTransiton] = useTransition();
   const [account, setAccount] = useState("Jory Quispe");
-  const [error,setError] = useState("")
+  const [error, setError] = useState("");
   function handleChnage(e: any) {
     setAccount(() => {
       return e.target.value;
@@ -14,17 +15,20 @@ export default function DemoAccounts() {
   async function handelForm(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     startTransiton(async () => {
-      setError("")
+      setError("");
       const result = await DemoAccountLogIn({ account });
-      const {error} =  JSON.parse(result);
+      const { error } = JSON.parse(result);
       if (error) {
-        setError(error.message)
+        setError(error.message);
         console.error("Error", error);
       }
     });
   }
   return (
-    <form onSubmit={handelForm} className=" p-4 shadow-md bg-white rounded text-base ">
+    <form
+      onSubmit={handelForm}
+      className=" p-4 shadow-md bg-white rounded text-base "
+    >
       <label className=" text-gray-800 p-1">select demo account</label>
       <select
         id="account"
@@ -37,12 +41,8 @@ export default function DemoAccounts() {
         <option value="Emil Joyce">Emil Joyce</option>
       </select>
       <div className="flex justify-center mt-3 m-2 ">
-        <button
-          type="submit"
-          className=" bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full  "
-        >
-          Try it now
-        </button>
+       <Button type="submit" className=" bg-blue-500 text-white "
+>Try it now</Button>
       </div>
       <span className=" text-gray-800 text-sm"> {error ?? ""}</span>
       <div className={isPending ? "block" : `hidden`}>

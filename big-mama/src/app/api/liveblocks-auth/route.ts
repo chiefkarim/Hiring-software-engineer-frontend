@@ -13,29 +13,29 @@ const liveblocks = new Liveblocks({
 });
 
 export async function POST(request: NextRequest) {
-
-  const result = await readUserSession()
+  const result = await readUserSession();
   if (result?.data.session) {
-    const user = result.data.session.user
-    const userId = user.email
-    const response: any = await getUserInfos()
-    console.log("userinfo",)
-    if (response.error) {
-      return new Response("Error while fetching the user", { status: 500 })
-    }
-    if(userId){
-
-      const userInfo = { name: response?.name, picture: response?.avatar }
-      const { body, status } = await liveblocks.identifyUser({ userId: userId, groupIds: [] }, {
-        userInfo: userInfo
-      })
+    const user = result.data.session.user;
+    const userId = user.email;
+    const response: any = await getUserInfos();
   
-      return new Response(body, { status })
-    }else{
-      return new Response("", { status:403 })
+    if (response.error) {
+      return new Response("Error while fetching the user", { status: 500 });
     }
+    if (userId) {
+      const userInfo = { name: response?.name, picture: response?.avatar };
+      const { body, status } = await liveblocks.identifyUser(
+        { userId: userId, groupIds: [] },
+        {
+          userInfo: userInfo,
+        },
+      );
 
-  }else{
-    return new Response("", { status:403 })
+      return new Response(body, { status });
+    } else {
+      return new Response("", { status: 403 });
+    }
+  } else {
+    return new Response("", { status: 403 });
   }
 }

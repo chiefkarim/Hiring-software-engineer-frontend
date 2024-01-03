@@ -16,7 +16,7 @@ export default function DisplayDocuments({ rooms }: any) {
       }),
     };
   });
-  console.log(rooms);
+
   //handel room delete
   async function handleDelete(id: string) {
     setRemoving(() => {
@@ -26,7 +26,6 @@ export default function DisplayDocuments({ rooms }: any) {
       const result: any = await deleteDocument(id);
       if (result) {
       } else if (result?.error) {
-        console.log(result.error);
       }
     });
   }

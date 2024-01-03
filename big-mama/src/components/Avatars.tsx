@@ -1,5 +1,5 @@
-import { useOthers,useSelf } from "../../liveblocks.config";
-import styles from "../styles/Avatars.module.css"
+import { useOthers, useSelf } from "../../liveblocks.config";
+import styles from "../styles/Avatars.module.css";
 import Image from "next/image";
 
 export function Avatars() {
@@ -30,9 +30,9 @@ export function Avatar({ picture, name }: { picture: string; name: string }) {
   return (
     <div className={styles.avatar} data-tooltip={name}>
       <Image
-      width={48}
-      height={48}
-      alt=""
+        width={48}
+        height={48}
+        alt=""
         src={picture}
         className={styles.avatar_picture}
         data-tooltip={name}

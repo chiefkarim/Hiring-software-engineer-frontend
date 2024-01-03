@@ -69,14 +69,13 @@ export default function SignIn() {
     //sign user in
     async function handelSignIn() {
       const result = await signIn(inputs);
-      
+
       const { error } = JSON.parse(result);
       if (error?.message) {
         setError((errors) => [
           ...errors.filter((error) => error.type != "server"),
           { type: "server", message: error.message },
         ]);
-        
       } else {
         setError((errors) => [
           ...errors.filter((error) => error.type != "server"),

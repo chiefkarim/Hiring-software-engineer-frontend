@@ -63,7 +63,6 @@ export default function Signup() {
         ...errors.filter((error) => error.type != "server"),
         { type: "server", message: error.message },
       ]);
-      
     } else {
       setError((errors) => [
         ...errors.filter((error) => error.type != "server"),
@@ -71,7 +70,7 @@ export default function Signup() {
       push("/");
     }
   }
-  console.log(inputs)
+ 
   return (
     <main className="flex min-h-screen flex-col  items-center justify-center text-xl   p-12 lg:p-24 ">
       <form onSubmit={handleSubmit} className="flex flex-col flex-wrap gap-12">

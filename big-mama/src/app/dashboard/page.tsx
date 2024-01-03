@@ -9,10 +9,10 @@ import { unstable_noStore as noStore } from "next/cache";
 export default async function Dashboard() {
   let loggedIn = false;
   const result = await readUserSession();
-noStore()
+  noStore();
   if (result?.data.session) {
     const userId = result.data.session.user.email;
-    console.info("Dashboard component: userId",userId)
+    console.info("Dashboard component: userId", userId);
     loggedIn = true;
     const SECRET_KEY = process.env.LIVEBLOCKS_SECRET_KEY;
     const liveblocks = new Liveblocks({
@@ -21,7 +21,7 @@ noStore()
     const { data: rooms, nextPage } = await liveblocks.getRooms({
       userId: userId,
     });
-    
+
     return (
       <>
         <NavBar loggedIn={loggedIn} />

@@ -18,7 +18,7 @@ export default function PermissionBar() {
 
   async function permissionChange(
     event: ChangeEvent<HTMLSelectElement>,
-    id: string
+    id: string,
   ) {
     const permission: string = event.target.value;
     const result = await updateUserPermission(roomId, id, permission);
@@ -34,7 +34,7 @@ export default function PermissionBar() {
   async function sendInvite(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const id = event.currentTarget.email.value;
-    const result = await updateUserPermission(roomId, id, "write")
+    const result = await updateUserPermission(roomId, id, "write");
   }
 
   return (

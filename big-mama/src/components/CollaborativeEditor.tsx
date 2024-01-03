@@ -6,7 +6,12 @@ import Collaboration from "@tiptap/extension-collaboration";
 import CollaborationCursor from "@tiptap/extension-collaboration-cursor";
 import * as Y from "yjs";
 import LiveblocksProvider from "@liveblocks/yjs";
-import { useRoom, useSelf, useMyPresence, useEventListener } from "../../liveblocks.config";
+import {
+  useRoom,
+  useSelf,
+  useMyPresence,
+  useEventListener,
+} from "../../liveblocks.config";
 import { useEffect, useState, PointerEvent, useRef } from "react";
 import { Toolbar } from "./Toolbar";
 import styles from "../styles/CollaborativeEditor.module.css";
@@ -20,15 +25,15 @@ export function CollaborativeEditor() {
   const room = useRoom();
   const [doc, setDoc] = useState<Y.Doc>();
   const [provider, setProvider] = useState<any>();
-  
+
   // reconnect on any of the users permission change
- 
-   useEventListener(({ event, user, connectionId }) => {
-     //                       ^^^^ Will be Client A
-     if (event.type === "PermissionUpdate") {
-      room.reconnect()   
-     }
-   });
+
+  useEventListener(({ event, user, connectionId }) => {
+    //                       ^^^^ Will be Client A
+    if (event.type === "PermissionUpdate") {
+      room.reconnect();
+    }
+  });
 
   // Set up Liveblocks Yjs provider
   useEffect(() => {
@@ -36,7 +41,7 @@ export function CollaborativeEditor() {
     const yProvider = new LiveblocksProvider(room, yDoc);
     setDoc(yDoc);
     setProvider(yProvider);
- 
+
     return () => {
       yDoc?.destroy();
       yProvider?.destroy();
@@ -47,7 +52,11 @@ export function CollaborativeEditor() {
     return null;
   }
 
-  return <><TiptapEditor  doc={doc} provider={provider} /></>;
+  return (
+    <>
+      <TiptapEditor doc={doc} provider={provider} />
+    </>
+  );
 }
 
 type EditorProps = {
@@ -60,32 +69,35 @@ function TiptapEditor({ doc, provider }: EditorProps) {
   const userInfo = useSelf((me) => me.info);
   const [myPresence, updateMyPresence] = useMyPresence();
   const canWrite = useSelf((me) => me.canWrite);
- 
+
   // Set up editor with plugins, and place user info into Yjs awareness and cursors
-  const editor = useEditor({
-    editable: canWrite,
-    editorProps: {
-      attributes: {
-        // Add styles to editor element
-        class: styles.editor,
+  const editor = useEditor(
+    {
+      editable: canWrite,
+      editorProps: {
+        attributes: {
+          // Add styles to editor element
+          class: styles.editor,
+        },
       },
+      extensions: [
+        StarterKit.configure({
+          // The Collaboration extension comes with its own history handling
+          history: false,
+        }),
+        // Register the document with Tiptap
+        Collaboration.configure({
+          document: doc,
+        }),
+        // Attach provider and user info
+        CollaborationCursor.configure({
+          provider: provider,
+          user: userInfo,
+        }),
+      ],
     },
-    extensions: [
-      StarterKit.configure({
-        // The Collaboration extension comes with its own history handling
-        history: false,
-      }),
-      // Register the document with Tiptap
-      Collaboration.configure({
-        document: doc,
-      }),
-      // Attach provider and user info
-      CollaborationCursor.configure({
-        provider: provider,
-        user: userInfo,
-      }),
-    ],
-  },[canWrite]);
+    [canWrite],
+  );
 
   function handelCursorMove(e: PointerEvent<HTMLDivElement>) {
     const cursor = { x: Math.floor(e.clientX), y: Math.floor(e.clientY) };
@@ -103,20 +115,27 @@ function TiptapEditor({ doc, provider }: EditorProps) {
     >
       <div className={`flex-1 ${styles.container} mb-6 `}>
         <div className={styles.editorHeader}>
-         {canWrite ? <Toolbar editor={editor} /> : null}
+          {canWrite ? <Toolbar editor={editor} /> : null}
           <div className={canWrite ? "flex" : "flex ml-auto pt-[.7em]"}>
-          <Avatars />
-          {canWrite ? <PermissionBar/> : ""}
+            <Avatars />
+            {canWrite ? <PermissionBar /> : ""}
           </div>
-        </div >
-       {canWrite ? <EditorContent editor={editor} className={styles.editorContainer} /> :  <EditorContent editor={editor} className={styles.editorContainer + " p-1"} />}
+        </div>
+        {canWrite ? (
+          <EditorContent editor={editor} className={styles.editorContainer} />
+        ) : (
+          <EditorContent
+            editor={editor}
+            className={styles.editorContainer + " p-1"}
+          />
+        )}
       </div>
       <Cursor />
     </main>
   );
 }
 // Prevents a matchesNode error on hot reloading
-EditorView.prototype.updateState = function updateState(state:any) {
+EditorView.prototype.updateState = function updateState(state: any) {
   // @ts-ignore
   if (!this.docView) return;
   // @ts-ignore

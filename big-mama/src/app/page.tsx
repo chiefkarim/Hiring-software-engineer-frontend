@@ -11,13 +11,13 @@ export default async function Home() {
 
   if (result?.data.session) {
     loggedIn = true;
-    redirect("/dashboard")
+    redirect("/dashboard");
   }
   return (
     <>
       <NavBar loggedIn={loggedIn} />
       <main className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
-        <DemoAccounts/>
+        <DemoAccounts />
       </main>
     </>
   );

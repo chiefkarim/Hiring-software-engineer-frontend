@@ -7,8 +7,7 @@ import NavBar from "./NavBar";
 export default function LiveblocksError() {
   const [content, setContent] = useState(<Loading />);
 
-  useErrorListener((error:any) => {
-    
+  useErrorListener((error: any) => {
     switch (error?.code) {
       case -1:
         // Authentication error
