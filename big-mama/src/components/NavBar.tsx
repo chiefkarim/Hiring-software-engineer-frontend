@@ -1,3 +1,5 @@
+"use client";
+import { useState } from "react";
 import Logout from "./Logout";
 import {
   Navbar,
@@ -6,17 +8,29 @@ import {
   NavbarItem,
   Link,
   Button,
+  NavbarMenu,
+  NavbarMenuItem,
+  NavbarMenuToggle,
 } from "@nextui-org/react";
 
 export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <Navbar className=" bg-purple ">
-      <NavbarBrand className="flex-grow-0 text-white ">
-        <Link  href="/">
-          <p className="font-semibold text-xl text-white tracking-tight">Big Mama</p>
-        </Link>
-      </NavbarBrand>
-      <NavbarContent  justify="start">
+    <Navbar onMenuOpenChange={setIsMenuOpen} className=" bg-purple ">
+      <NavbarContent justify="center">
+        <NavbarMenuToggle
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          className="sm:hidden text-white"
+        />
+        <NavbarBrand className=" text-white ">
+          <Link href="/">
+            <p className="font-semibold text-xl text-white tracking-tight">
+              Big Mama
+            </p>
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
+      <NavbarContent justify="start" className="hidden sm:flex">
         <NavbarItem>
           <Link
             target="_blank"
@@ -27,48 +41,73 @@ export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
           >
             Docs
           </Link>
-          </NavbarItem>
-          {loggedIn === true ? (
-            <NavbarItem>
+        </NavbarItem>
+        {loggedIn === true ? (
+          <NavbarItem>
             <Link
               href="/dashboard"
               className=" text-purple-200 hover:text-white "
             >
               Dashboard
             </Link>
-            </NavbarItem>
-          ) : (
-            ""
-          )}
-        
-
-       
+          </NavbarItem>
+        ) : null}
       </NavbarContent>
       <NavbarContent justify="end">
-      {loggedIn === true ? (
+        {loggedIn === true ? (
           <Logout />
         ) : (
           <>
-            <Button
-              as={Link}
-              variant="faded"
-              color="secondary"
-              href="/auth/signup"
-            >
-              Sign up
-            </Button>
-
-            <Button
-              as={Link}
-              variant="ghost"
-              href="/auth/signin"
-              className="text-white hover:text-purple "
-            >
-              Sign in
-            </Button>
+            <NavbarItem>
+              <Button
+                as={Link}
+                variant="solid"
+                color="primary"
+                href="/auth/signup"
+              >
+                Sign up
+              </Button>
+            </NavbarItem>
+            <NavbarItem className="hidden sm:flex">
+              <Button
+                as={Link}
+                variant="ghost"
+                href="/auth/signin"
+                className="text-white hover:text-purple "
+              >
+                Sign in
+              </Button>
+            </NavbarItem>
           </>
         )}
       </NavbarContent>
+      <NavbarMenu>
+        {loggedIn === true ? (
+          <NavbarMenuItem>
+            <Link href="/dashboard" color="foreground">
+              Dashboard
+            </Link>
+          </NavbarMenuItem>
+        ) : null}
+        <NavbarMenuItem>
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            showAnchorIcon
+            href="https://github.com/chiefkarim/Hiring-software-engineer-frontend/tree/development-karim"
+            color="foreground"
+          >
+            Docs
+          </Link>
+        </NavbarMenuItem>
+        {loggedIn === false ? (
+          <NavbarMenuItem>
+            <Link href="/auth/signin" color="primary">
+              Sign in
+            </Link>
+          </NavbarMenuItem>
+        ) : null}
+      </NavbarMenu>
     </Navbar>
   );
 }
