@@ -51,7 +51,6 @@ export default function CreateDocument() {
         <Input
           type="text"
           label="Enter project name"
-        
           value={inputs.title || ""}
           onChange={handleChange}
           name="title"

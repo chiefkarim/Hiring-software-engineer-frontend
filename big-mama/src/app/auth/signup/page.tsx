@@ -9,6 +9,8 @@ import {
 import { v4 as uuid } from "uuid";
 import { signUp } from "../actions";
 import { useRouter } from "next/navigation";
+import NavBar from "@/components/NavBar";
+import { Input } from "@nextui-org/react";
 
 interface input {
   [x: string]: any;
@@ -70,63 +72,89 @@ export default function Signup() {
       push("/");
     }
   }
- 
+
   return (
-    <main className="flex min-h-screen flex-col  items-center justify-center text-xl   p-12 lg:p-24 ">
-      <form onSubmit={handleSubmit} className="flex flex-col flex-wrap gap-12">
-        <div>
-          <label>
-            name:
-            <input
-              className=" mx-5"
-              type="text"
-              name="name"
-              value={inputs!.name || ""}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            email:
-            <input
-              className=" mx-5"
-              type="email"
-              name="email"
-              value={inputs!.email || ""}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            password:
-            <input
-              className=" mx-5"
-              type="password"
-              name="password"
-              value={inputs!.password || ""}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className=" bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full  "
-          >
-            register
-          </button>
-        </div>
-        <div className={isPending ? "inline-block" : `hidden`}>
-          <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
-            loading...
+    <>
+      <NavBar loggedIn={false} />
+      <main className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
+        <form onSubmit={handleSubmit} className="flex flex-col flex-wrap ">
+          <div className=" m-2">
+            <label>
+              Name:
+              <Input
+                className="m-2"
+                type="text"
+                name="name"
+                classNames={{
+                  errorMessage: "text-gray",
+                }}
+                errorMessage={
+                  error.filter((err) => err.type == "name").length === 1 &&
+                  error.filter((err) => err.type == "name")[0].message
+                }
+                value={inputs!.name || ""}
+                onChange={handleChange}
+              />
+            </label>
           </div>
-        </div>
-        {error.map((error) => (
-          <span key={uuid()}>{error.message}</span>
-        ))}
-      </form>
-    </main>
+          <div className=" m-2">
+            <label>
+              Email:
+              <Input
+                className="m-2"
+                type="email"
+                name="email"
+                classNames={{
+                  errorMessage: "text-gray",
+                }}
+                errorMessage={
+                  error.filter((err) => err.type == "email").length === 1 &&
+                  error.filter((err) => err.type == "email")[0].message
+                }
+                value={inputs!.email || ""}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className=" m-2">
+            <label>
+              Password:
+              <Input
+                className="m-2"
+                type="password"
+                name="password"
+                classNames={{
+                  errorMessage: "text-gray",
+                }}
+                errorMessage={
+                  error.filter((err) => err.type == "password").length === 1 &&
+                  error.filter((err) => err.type == "password")[0].message
+                }
+                value={inputs!.password || ""}
+                onChange={handleChange}
+              />
+            </label>
+          </div>
+          <div className="flex justify-center m-2">
+            <button
+              type="submit"
+              className=" bg-blue-500 hover:bg-blue-700 text-white  py-2 px-4 rounded-full  "
+            >
+              Register
+            </button>
+          </div>
+          <div className={isPending ? "inline-block" : `hidden`}>
+            <div className="px-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
+              loading...
+            </div>
+          </div>
+          {error.map((error) => (
+            <span key={uuid()} className="m-2 text-base text-center text-gray ">
+              {error.type === "server" && error.message}
+            </span>
+          ))}
+        </form>
+      </main>
+    </>
   );
 }
