@@ -44,7 +44,7 @@ export default function CreateDocument() {
   return (
     <form
       onSubmit={createRoom}
-      className="  mt-8 p-6 rounded-md shadow-md text-white max-w-md w-full "
+      className="  p-6 rounded-md shadow-md text-white max-w-md w-full "
     >
       <h2 className="text-2xl font-semibold mb-4">Add Document</h2>
       <div className="flex  gap-2 sm:gap-4 flex-col justify-center space-x-4 ">

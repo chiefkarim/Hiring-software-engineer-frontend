@@ -1,7 +1,9 @@
 "use client";
 import { deleteDocument } from "@/app/document/action";
+import { Button, CardFooter, CardHeader, Divider } from "@nextui-org/react";
 import { useState, useTransition } from "react";
 import { v4 as uuid } from "uuid";
+import { Card, CardBody } from "@nextui-org/react";
 
 export default function DisplayDocuments({ rooms }: any) {
   const [isPending, startTransiton] = useTransition();
@@ -31,34 +33,29 @@ export default function DisplayDocuments({ rooms }: any) {
   }
   return formatedRooms.map((room: any) => {
     return (
-      <div key={uuid()} className="bg-gray-100 bg-opacity-30 p-4">
-        <a href={`/document/?roomid=${room.id}`}>
-          <h1>{room?.metadata?.title}</h1>
-          <div className="flex  text-sm opacity-80">
-            <span>{room.metadata.type}</span>
-          </div>
-        </a>
-        <div>
-          <button
-            className=" bg-red-400 px-3 py-1 my-1"
+      <Card key={uuid()}>
+        <CardHeader>
+          <a href={`/document/?roomid=${room.id}`}>
+            <h1>{room?.metadata?.title}</h1>
+            <div className="flex  text-sm opacity-80">
+              <small>{room.metadata.type}</small>
+            </div>
+            <div className="flex justify-end text-base">
+              <small>{room.createdAt}</small>
+            </div>
+          </a>
+        </CardHeader>
+        <CardBody>
+          <Button
+            isLoading={isPending && room.id == removing ? isPending : false}
+            variant="light"
+            color="danger"
             onClick={() => handleDelete(room.id)}
           >
-            delete
-          </button>
-          <div className="flex justify-end text-sm">
-            <span>{room.createdAt}</span>
-          </div>
-          <div
-            className={
-              isPending && room.id == removing ? "inline-block" : `hidden`
-            }
-          >
-            <div className="px-3 mx-3 py-1 text-xs font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse dark:bg-blue-900 dark:text-blue-200">
-              Deleting...
-            </div>
-          </div>
-        </div>
-      </div>
+            Delete
+          </Button>
+        </CardBody>
+      </Card>
     );
   });
 }

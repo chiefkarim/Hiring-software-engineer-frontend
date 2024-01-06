@@ -25,8 +25,9 @@ export default async function Dashboard() {
     return (
       <>
         <NavBar loggedIn={loggedIn} />
-        <main className="flex min-h-screen flex-col items-center justify-center text-xl gap-4 p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
+        <main className="flex min-h-screen flex-col items-center justify-center text-xl gap-4 px-12 lg:px-24 bg-gradient-to-b from-purple to-indigo-600">
           <CreateDocument />
+          <h1 className="text-white">Rooms:</h1>
           <DisplayDocuments rooms={rooms} />
         </main>
       </>
