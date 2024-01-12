@@ -5,7 +5,7 @@ Embark on the development journey to create a cutting-edge Real-Time Document Co
 Develop a robust platform allowing users to collaboratively edit documents in real-time. Utilize Liveblocks for live updates, Next.js for the frontend, and Supabase for user authentication and document storage.
 
 [live preview](https://hiring-software-engineer-frontend.vercel.app/)
-
+![preview image](preview.png)
 ## How does this work ?
 
 Below is a list of tasks that candidates concurently work on. If you deem your contribution to be complete, you can create a pull request.
