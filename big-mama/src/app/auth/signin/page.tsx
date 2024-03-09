@@ -90,7 +90,7 @@ export default function SignIn() {
   return (
     <>
       <NavBar loggedIn={false} />
-      <main className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600">
+      <main className="flex min-h-screen text-white flex-col items-center justify-center text-xl   p-12 lg:p-24 bg-black">
         <form onSubmit={handleSubmit} className="flex flex-col flex-wrap ">
           <div className=" m-2">
             <label>

@@ -15,10 +15,10 @@ import {
 
 export function NavBar({
   loggedIn,
-  props,
+  props = "bg-black",
 }: {
   loggedIn: boolean;
-  props: string;
+  props?: string;
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
@@ -52,7 +52,7 @@ export function NavBar({
           <NavbarItem>
             <Link
               href="/dashboard"
-              className=" text-purple-200 hover:text-white "
+              className=" text-white hover:text-white/90 "
             >
               Dashboard
             </Link>

@@ -8,7 +8,7 @@ export default function Logout() {
       <Button
         type="submit"
         variant="ghost"
-        className=" text-sm  leading-none  text-white  hover:border-transparent hover:text-purple hover:bg-white "
+        className=" text-sm  leading-none  text-white  hover:border-transparent hover:text-black hover:bg-white "
       >
         Logout
       </Button>

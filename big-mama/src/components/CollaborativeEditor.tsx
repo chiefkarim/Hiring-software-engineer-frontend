@@ -19,6 +19,7 @@ import { Avatars } from "./Avatars";
 import { Cursor } from "./Cursor";
 import PermissionBar from "@/components/PermissionBar";
 import { EditorView } from "@tiptap/pm/view";
+import { Meteors } from "./meteors";
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
@@ -96,7 +97,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
         }),
       ],
     },
-    [canWrite],
+    [canWrite]
   );
 
   function handelCursorMove(e: PointerEvent<HTMLDivElement>) {
@@ -111,7 +112,7 @@ function TiptapEditor({ doc, provider }: EditorProps) {
     <main
       onPointerMove={handelCursorMove}
       onPointerLeave={handelCursorLeave}
-      className="flex h-screen text-white flex-col  text-xl p-12 lg:p-24 bg-gradient-to-b from-purple to-indigo-600"
+      className="flex h-screen text-white flex-col  text-xl p-12 lg:p-24 bg-black"
     >
       <div className={`flex-1 ${styles.container} mb-6 `}>
         <div className={styles.editorHeader}>

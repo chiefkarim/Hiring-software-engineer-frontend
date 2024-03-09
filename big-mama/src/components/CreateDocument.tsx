@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import { ChangeEvent, FormEvent, useState, useTransition } from "react";
 import { Button, Input } from "@nextui-org/react";
 import { RadioGroup, Radio } from "@nextui-org/react";
+import { Meteors } from "./meteors";
 
 export default function CreateDocument() {
   const roomId = uuid();
@@ -44,10 +45,12 @@ export default function CreateDocument() {
   return (
     <form
       onSubmit={createRoom}
-      className="  p-6 rounded-md shadow-md text-white max-w-md w-full "
+      className="relative overflow-hidden p-6 bg-background rounded-md shadow-md text-foreground max-w-md w-full "
     >
-      <h2 className="text-2xl font-semibold mb-4">Add Document</h2>
-      <div className="flex  gap-2 sm:gap-4 flex-col justify-center space-x-4 ">
+      <h2 className="text-2xl font-semibold mb-4 text-foreground">
+        Add Document
+      </h2>
+      <div className="flex  gap-2 sm:gap-4 flex-col justify-center space-x-4 text-foreground">
         <Input
           type="text"
           label="Enter project name"
@@ -55,23 +58,11 @@ export default function CreateDocument() {
           onChange={handleChange}
           name="title"
         />
-        <RadioGroup
-          name="type"
-          classNames={{ label: " text-white" }}
-          label="type of room"
-        >
-          <Radio
-            value="public"
-            classNames={{ label: " text-gray-200" }}
-            onChange={handleChange}
-          >
+        <RadioGroup name="type" label="type of room">
+          <Radio value="public" onChange={handleChange}>
             Public
           </Radio>
-          <Radio
-            value="private"
-            classNames={{ label: " text-gray-200 " }}
-            onChange={handleChange}
-          >
+          <Radio value="private" onChange={handleChange}>
             Private
           </Radio>
         </RadioGroup>
@@ -85,6 +76,7 @@ export default function CreateDocument() {
           Add
         </Button>
       </div>
+
       <p className=" text-gray-200 text-center text-base">{error}</p>
     </form>
   );
