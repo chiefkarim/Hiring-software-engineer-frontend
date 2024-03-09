@@ -19,7 +19,7 @@ import { Avatars } from "./Avatars";
 import { Cursor } from "./Cursor";
 import PermissionBar from "@/components/PermissionBar";
 import { EditorView } from "@tiptap/pm/view";
-import { Meteors } from "./meteors";
+import { SparklesCore } from "./sparkles";
 
 // Collaborative text editor with simple rich text, live cursors, and live avatars
 export function CollaborativeEditor() {
