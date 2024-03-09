@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useState, useTransition } from "react";
 import { v4 as uuid } from "uuid";
 import { signIn } from "../actions";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/NavBar";
+import { NavBar } from "@/components/NavBar";
 import { Card, CardBody, CircularProgress, Input } from "@nextui-org/react";
 
 interface input {

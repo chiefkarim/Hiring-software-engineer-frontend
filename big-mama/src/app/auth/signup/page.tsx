@@ -1,15 +1,9 @@
 "use client";
-import {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useState,
-  useTransition,
-} from "react";
+import { ChangeEvent, FormEvent, useState, useTransition } from "react";
 import { v4 as uuid } from "uuid";
 import { signUp } from "../actions";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/NavBar";
+import { NavBar } from "@/components/NavBar";
 import { Input } from "@nextui-org/react";
 
 interface input {

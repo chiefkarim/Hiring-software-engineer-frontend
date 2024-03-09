@@ -1,8 +1,8 @@
 "use client";
 import Loading from "@/app/loading";
 import { useErrorListener } from "../../liveblocks.config";
-import { useEffect, useState } from "react";
-import NavBar from "./NavBar";
+import { useState } from "react";
+import { NavBar } from "./NavBar";
 
 export default function LiveblocksError() {
   const [content, setContent] = useState(<Loading />);

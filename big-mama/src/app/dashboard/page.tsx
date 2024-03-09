@@ -1,6 +1,6 @@
 import CreateDocument from "@/components/CreateDocument";
 import DisplayDocuments from "@/components/DisplayDocuments";
-import NavBar from "@/components/NavBar";
+import { NavBar } from "@/components/NavBar";
 import readUserSession from "@/lib/actions";
 import { Liveblocks } from "@liveblocks/node";
 import { redirect } from "next/navigation";
@@ -12,7 +12,7 @@ export default async function Dashboard() {
   noStore();
   if (result?.data.session) {
     const userId = result.data.session.user.email;
-  
+
     loggedIn = true;
     const SECRET_KEY = process.env.LIVEBLOCKS_SECRET_KEY;
     const liveblocks = new Liveblocks({

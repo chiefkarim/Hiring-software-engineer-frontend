@@ -13,10 +13,16 @@ import {
   NavbarMenuToggle,
 } from "@nextui-org/react";
 
-export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
+export function NavBar({
+  loggedIn,
+  props,
+}: {
+  loggedIn: boolean;
+  props: string;
+}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <Navbar onMenuOpenChange={setIsMenuOpen} className=" bg-purple ">
+    <Navbar onMenuOpenChange={setIsMenuOpen} className={props}>
       <NavbarContent justify="center">
         <NavbarMenuToggle
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -25,7 +31,7 @@ export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
         <NavbarBrand className=" text-white ">
           <Link href="/">
             <p className="font-semibold text-xl text-white tracking-tight">
-              Big Mama
+              Doc Collab
             </p>
           </Link>
         </NavbarBrand>
@@ -37,7 +43,7 @@ export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
             rel="noopener noreferrer"
             showAnchorIcon
             href="https://github.com/chiefkarim/Hiring-software-engineer-frontend/tree/development-karim"
-            className="  text-purple-200 hover:text-white "
+            className="  text-white hover:text-white/90 "
           >
             Docs
           </Link>
@@ -73,7 +79,7 @@ export default function NavBar({ loggedIn }: { loggedIn: boolean }) {
                 as={Link}
                 variant="ghost"
                 href="/auth/signin"
-                className="text-white hover:text-purple "
+                className="text-white hover:text-black "
               >
                 Sign in
               </Button>
